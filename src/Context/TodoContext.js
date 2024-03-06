@@ -5,6 +5,7 @@ export const TodoContext = createContext({
     {
       id: 1,
       todo: " Todo msg",
+      date: "14 Oct 2001",
       completed: false,
     },
   ],
