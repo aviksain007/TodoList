@@ -57,9 +57,6 @@ function TodoItem({ todo }) {
         onChange={(e) => setTodoMsg(e.target.value)}
         readOnly={!isTodoEditable}
       />
-      <div class="ml-auto flex flex-shrink-0 border-[1px] border-white px-2 py-1 text-xs text-white md:text-sm">
-        15 Nov 2023
-      </div>
       <button
         onClick={() => deleteTodo(todo.id)}
         class="ml-2 flex flex-shrink-0 border-[1px] border-red-500 bg-red-500 p-1"
