@@ -28,10 +28,11 @@ function Body() {
   };
 
   const updateTodo = (id, todo) => {
+    const {todoMsg } = todo;
     setTodos((prev) =>
       prev.map((prevTodo) =>
         prevTodo.id === id
-          ? { ...prevTodo, todo, date: getCurrentTime() }
+          ? { ...todo, date: getCurrentTime() }
           : prevTodo
       )
     );
