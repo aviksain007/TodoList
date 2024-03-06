@@ -57,6 +57,7 @@ function TodoItem({ todo }) {
         onChange={(e) => setTodoMsg(e.target.value)}
         readOnly={!isTodoEditable}
       />
+      
       <button
         onClick={() => deleteTodo(todo.id)}
         class="ml-2 flex flex-shrink-0 border-[1px] border-red-500 bg-red-500 p-1"
