@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import TodoFrom from "./TodoFrom";
-import TodoItem from "./TodoItem";
+import { TodoFrom, TodoItem, EmptyPage } from "./index.js";
 import { TodoProvider } from "../Context/TodoContext";
-import EmptyPage from "./EmptyPage";
 import { v4 as uuidv4 } from "uuid";
 
 const months = [
-  "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const getCurrentTime = () => {
@@ -20,6 +29,7 @@ const getCurrentTime = () => {
 function Body() {
   const [todos, setTodos] = useState([]);
   const [showTodo, setShowTodo] = useState(false);
+  const [todoType, setTodoType] = useState("AllTodos");
 
   const addTodo = (todo) => {
     let time = getCurrentTime();
@@ -28,12 +38,10 @@ function Body() {
   };
 
   const updateTodo = (id, todo) => {
-    const {todoMsg } = todo;
+    const { todoMsg } = todo;
     setTodos((prev) =>
       prev.map((prevTodo) =>
-        prevTodo.id === id
-          ? { ...todo, date: getCurrentTime() }
-          : prevTodo
+        prevTodo.id === id ? { ...todo, date: getCurrentTime() } : prevTodo
       )
     );
   };
@@ -80,13 +88,49 @@ function Body() {
       ) : (
         <div class="mx-auto flex h-full min-h-screen w-full max-w-full flex-col items-start justify-start px-4 py-28 text-center md:max-w-5xl">
           <div class="flex w-full flex-col gap-5">
+            <div class="flex w-full flex-shrink-0 flex-wrap items-center justify-start gap-3 md:gap-6">
+              <button
+                onClick={() => setTodoType("AllTodos")}
+                className={`${todoType === 'AllTodos' ? "border-[1px] border-[#565656] bg-[#232323]" : ""} px-3 py-2 text-sm font-semibold text-white hover:bg-[#232323] md:text-base`}
+              >
+                All todos
+              </button>
+              <button
+                onClick={() => setTodoType("Pending")}
+                className={`${todoType === 'Pending' ? "border-[1px] border-[#565656] bg-[#232323]" : ""} px-3 py-2 text-sm font-semibold text-white hover:bg-[#232323] md:text-base`}
+              >
+                Pending
+              </button>
+              <button
+                onClick={() => setTodoType("Completed")}
+                className={`${todoType === 'Completed' ? "border-[1px] border-[#565656] bg-[#232323]" : ""} px-3 py-2 text-sm font-semibold text-white hover:bg-[#232323] md:text-base`}
+              >
+                Completed
+              </button>
+            </div>
             <ul class="divide-y-[1px] divide-white border-[1px] border-white p-0">
               <TodoFrom />
-              {todos.map((todo) => (
-                <div key={todo.id} className="w-full">
-                  <TodoItem todo={todo} />
-                </div>
-              ))}
+              {todoType === "AllTodos"
+                ? todos.map((todo) => (
+                    <div key={todo.id} className="w-full">
+                      <TodoItem todo={todo} />
+                    </div>
+                  ))
+                : todoType === "Pending"
+                ? todos.map((todo) =>
+                    !todo.completed ? (
+                      <div key={todo.id} className="w-full">
+                        <TodoItem todo={todo} />
+                      </div>
+                    ) : null
+                  )
+                : todos.map((todo) =>
+                    todo.completed ? (
+                      <div key={todo.id} className="w-full">
+                        <TodoItem todo={todo} />
+                      </div>
+                    ) : null
+                  )}
             </ul>
           </div>
         </div>
