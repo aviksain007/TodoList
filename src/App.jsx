@@ -1,5 +1,4 @@
-import Header from "./Components/Header";
-import Body from "./Components/Body";
+import { Header, Body } from "./Components/index.js";
 
 function App() {
   return (
